@@ -10,22 +10,22 @@ import java.util.stream.Collectors;
 public class WorkerPredicates {
 
     public static Predicate<Worker> isAdult() {
-        return null;
+        return worker -> worker.getAge() > 20;
     }
 
     public static Predicate<Worker> isAgeMoreThan(int age) {
-        return null;
+        return worker -> worker.getAge() > age;
     }
 
     public static Predicate<Worker> isAgeMoreThanAndProfession(int age, Profession profession) {
-        return null;
+        return worker -> worker.getAge() > age && worker.getProfession() == profession;
     }
 
     public static Predicate<Worker> isAgeMoreThanOrProfession(int age, Profession profession) {
-        return null;
+        return worker -> worker.getAge() > age || worker.getProfession() == profession;
     }
 
     public static List<Worker> filterWorkers(List<Worker> workerList, Predicate<Worker> predicate) {
-        return null;
+        return workerList.stream().filter(predicate).collect(Collectors.toList());
     }
 }
