@@ -12,21 +12,21 @@ import java.util.function.Consumer;
 
 public class LambdaServiceImplTest {
 
-    public static Consumer<Worker> CONSUMER_CONSOLE = null;
-    public static Consumer<Worker> CONSUMER_CONSOLE_ALL_INFO = null;
+    public static Consumer<Worker> CONSUMER_CONSOLE = System.out::println;
+    public static Consumer<Worker> CONSUMER_CONSOLE_ALL_INFO = worker -> System.out.println(worker + "" + worker.getAge() + " - " + worker.getPhone());
 
-    public static Transform<String> TO_UPPER_CASE = null;
-    public static Transform<String> STR_DOUBLE = null;
-    public static Transform<String> STR_DOUBLE_UPPER = null;
+    public static Transform<String> TO_UPPER_CASE = String::toUpperCase;
+    public static Transform<String> STR_DOUBLE = str -> str.concat(str);
+    public static Transform<String> STR_DOUBLE_UPPER = str -> str.concat(str).toUpperCase();
 
-    public static Comparator<String> COMPARE_STRINGS = null;
-    public static Comparator<Worker> COMPARE_WORKERS_BY_ID = null;
-    public static Comparator<Worker> COMPARE_WORKERS_BY_FIRST_NAME = null;
-    public static Comparator<Worker> COMPARE_WORKERS_BY_AGE = null;
+    public static Comparator<String> COMPARE_STRINGS = String::compareTo;
+    public static Comparator<Worker> COMPARE_WORKERS_BY_ID = (x, y) -> (int) (x.getId() - y.getId());
+    public static Comparator<Worker> COMPARE_WORKERS_BY_FIRST_NAME = Comparator.comparing(Worker::getFirstName);
+    public static Comparator<Worker> COMPARE_WORKERS_BY_AGE = Comparator.comparingInt(Worker::getAge);
 
-    public static BiFunction<Float, Float, Float> ADDITION = null;
-    public static BiFunction<Float, Float, Float> DEDUCTION = null;
-    public static BiFunction<Float, Float, Float> MULTIPLICATION = null;
+    public static BiFunction<Float, Float, Float> ADDITION = Float::sum;
+    public static BiFunction<Float, Float, Float> DEDUCTION = (x, y) -> (x - y);
+    public static BiFunction<Float, Float, Float> MULTIPLICATION = (x, y) -> (x * y);
 
 
     @Test
