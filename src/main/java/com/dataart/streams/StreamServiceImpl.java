@@ -21,8 +21,7 @@ public class StreamServiceImpl {
     }
 
     public static Integer getSum(int... i) {
-        IntStream stream = IntStream.of(i);
-        return stream.sum();
+        return IntStream.of(i).sum();
     }
 
     public static Long getCountWordsLongestThan(List<String> words, int count) {
@@ -76,13 +75,11 @@ public class StreamServiceImpl {
     }
 
     public static List<Worker> searchWorkers(List<Company> companies, Profession profession) {
-        List<Worker> workers = companies.stream()
+        return companies.stream()
                 .map(company -> company.getWorkers().orElse(null))
                 .filter(Objects::nonNull)
                 .flatMap(Collection::stream)
-                .collect(Collectors.toList());
-
-        return workers.stream()
+                .collect(Collectors.toList()).stream()
                 .filter(worker -> worker.getProfession().equals(profession))
                 .collect(Collectors.toList());
     }
