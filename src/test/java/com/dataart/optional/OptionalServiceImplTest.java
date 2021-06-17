@@ -17,7 +17,7 @@ public class OptionalServiceImplTest extends TestCase {
     }
 
     public static Predicate<Computer> predCheaperThan(float price) {
-        return c -> OptionalServiceImpl.isSoundCardPresent(Optional.of(c));
+        return c -> c.getPrice() > price;
     }
 
     @Test

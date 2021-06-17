@@ -39,7 +39,7 @@ public class StreamServiceImpl {
     public static String getFirstWordStartWith(List<String> words, String startWith) {
         return words.stream()
                 .filter(word -> word.startsWith(startWith))
-                .findFirst().orElse(null);
+                .findFirst().orElse("UNKNOWN");
     }
 
     public static Double getAverageAge(List<Worker> workers) {

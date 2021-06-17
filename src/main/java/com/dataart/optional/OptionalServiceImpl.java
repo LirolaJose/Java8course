@@ -20,18 +20,28 @@ public class OptionalServiceImpl {
     }
 
     public static Optional<SoundCard> checkSoundCardOrSetDefault(Optional<Computer> computer) {
-        return null;
+        return Optional.of(computer
+                .flatMap(Computer::getUsb)
+                .flatMap(USB::getSoundCard)
+                .orElse(new SoundCard("CH External")));
     }
 
     public static Boolean isSoundCardPresent(Optional<Computer> computer) {
-        return null;
+        return computer
+                .flatMap(Computer::getUsb)
+                .flatMap(USB::getSoundCard)
+                .isPresent();
     }
 
     public static String getSoundCardInfo(Optional<Computer> computer) {
-        return null;
+        return computer
+                .flatMap(Computer::getUsb)
+                .flatMap(USB::getSoundCard)
+                .map(SoundCard::getVersion)
+                .orElse("NONE");
     }
 
     public static Optional<Computer> getComputersByCriterias(Optional<Computer> computerOptional, Predicate p) {
-        return null;
+        return computerOptional.filter(p::test);
     }
 }
