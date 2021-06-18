@@ -10,7 +10,11 @@ import java.util.stream.Collectors;
 public class PersonServiceImpl {
 
     public static List<Worker> getWorkersByCompanyAndProf(MapNpeProtection<String, Company> companyMap, String companyName, Profession profession) {
-        return null;
+        return companyMap
+                .find(companyName)
+                .flatMap(Company::getWorkers)
+                .map(workers -> workers.stream()
+                        .filter(worker -> worker.getProfession() == profession).collect(Collectors.toList())).orElse(null);
     }
 
 }
