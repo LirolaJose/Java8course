@@ -7,6 +7,7 @@ import com.dataart.core.data.Worker;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
+import java.util.stream.Collectors;
 
 public class AsyncFutureServiceImpl {
 
@@ -18,7 +19,7 @@ public class AsyncFutureServiceImpl {
 
     public static Integer handleException(CompletableFuture<String> future) throws ExecutionException, InterruptedException {
         return future
-                .exceptionally(err -> String.valueOf(-1))
+                .exceptionally(err -> "-1")
                 .thenApply(Integer::parseInt).join();
 
     }
@@ -26,8 +27,13 @@ public class AsyncFutureServiceImpl {
     public static CompletableFuture<List<Worker>> handleFutures(CompletableFuture<Company> companyCompletableFuture,
                                                                 CompletableFuture<Profession> professionCompletableFuture) throws ExecutionException, InterruptedException {
 
-        return companyCompletableFuture.thenApply(company -> company
-                .getWorkers().orElse(null));
+        return CompletableFuture.allOf(professionCompletableFuture, companyCompletableFuture)
+                .thenApply(v -> companyCompletableFuture.join()
+                        .getWorkers()
+                        .map(workers -> workers.stream()
+                                .filter(worker -> worker.getProfession().equals(professionCompletableFuture.join()))
+                                .collect(Collectors.toList()))
+                        .orElse(null));
     }
 
 }
