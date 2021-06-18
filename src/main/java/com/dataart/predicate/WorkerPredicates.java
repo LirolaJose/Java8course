@@ -26,6 +26,8 @@ public class WorkerPredicates {
     }
 
     public static List<Worker> filterWorkers(List<Worker> workerList, Predicate<Worker> predicate) {
-        return workerList.stream().filter(predicate).collect(Collectors.toList());
+        return workerList.stream()
+                .filter(predicate)
+                .collect(Collectors.toList());
     }
 }

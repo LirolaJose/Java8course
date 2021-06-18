@@ -14,7 +14,9 @@ public class PersonServiceImpl {
                 .find(companyName)
                 .flatMap(Company::getWorkers)
                 .map(workers -> workers.stream()
-                        .filter(worker -> worker.getProfession() == profession).collect(Collectors.toList())).orElse(null);
+                        .filter(worker -> worker.getProfession().equals(profession))
+                        .collect(Collectors.toList()))
+                .orElse(null);
     }
 
 }
