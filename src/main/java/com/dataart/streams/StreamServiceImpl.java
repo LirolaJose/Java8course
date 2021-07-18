@@ -55,6 +55,7 @@ public class StreamServiceImpl {
     }
 
     public static List<String> concatenationAndToUpperCase(List<String> words1, List<String> words2) {
+        // TODO: no need to collect it to list and then get stream one more time
         List<String> commonList = Stream.concat(words1.stream(), words2.stream()).collect(Collectors.toList());
         return commonList.stream()
                 .map(String::toUpperCase)
@@ -76,9 +77,11 @@ public class StreamServiceImpl {
 
     public static List<Worker> searchWorkers(List<Company> companies, Profession profession) {
         return companies.stream()
+                // TODO: it's not a good idea to return null for List of objects
                 .map(company -> company.getWorkers().orElse(null))
                 .filter(Objects::nonNull)
                 .flatMap(Collection::stream)
+                // TODO: Why do you need to collect intermediate result to list?
                 .collect(Collectors.toList()).stream()
                 .filter(worker -> worker.getProfession().equals(profession))
                 .collect(Collectors.toList());

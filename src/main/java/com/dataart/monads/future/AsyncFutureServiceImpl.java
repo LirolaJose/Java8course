@@ -30,9 +30,11 @@ public class AsyncFutureServiceImpl {
         return CompletableFuture.allOf(professionCompletableFuture, companyCompletableFuture)
                 .thenApply(v -> companyCompletableFuture.join()
                         .getWorkers()
+                        // TODO: please try to avoid using internal streams inside of map/flatMaps
                         .map(workers -> workers.stream()
                                 .filter(worker -> worker.getProfession().equals(professionCompletableFuture.join()))
                                 .collect(Collectors.toList()))
+                        // TODO: it's not a good idea to return NULL as a collection result
                         .orElse(null));
     }
 

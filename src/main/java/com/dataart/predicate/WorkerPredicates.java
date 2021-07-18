@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 
 public class WorkerPredicates {
 
+    // TIPS: you can use isAgeMoreThan method
     public static Predicate<Worker> isAdult() {
         return worker -> worker.getAge() > 20;
     }
@@ -17,10 +18,12 @@ public class WorkerPredicates {
         return worker -> worker.getAge() > age;
     }
 
+    // TIPS: you can use isAgeMoreThan method
     public static Predicate<Worker> isAgeMoreThanAndProfession(int age, Profession profession) {
         return worker -> worker.getAge() > age && worker.getProfession() == profession;
     }
 
+    // TIPS: you can use isAgeMoreThan method
     public static Predicate<Worker> isAgeMoreThanOrProfession(int age, Profession profession) {
         return worker -> worker.getAge() > age || worker.getProfession() == profession;
     }
