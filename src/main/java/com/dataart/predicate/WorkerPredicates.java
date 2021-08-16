@@ -20,12 +20,12 @@ public class WorkerPredicates {
 
     // TIPS: you can use isAgeMoreThan method
     public static Predicate<Worker> isAgeMoreThanAndProfession(int age, Profession profession) {
-        return worker -> worker.getAge() > age && worker.getProfession() == profession;
+        return worker -> worker.getAge() > age && worker.getProfession().equals(profession);
     }
 
     // TIPS: you can use isAgeMoreThan method
     public static Predicate<Worker> isAgeMoreThanOrProfession(int age, Profession profession) {
-        return worker -> worker.getAge() > age || worker.getProfession() == profession;
+        return worker -> worker.getAge() > age || worker.getProfession().equals(profession);
     }
 
     public static List<Worker> filterWorkers(List<Worker> workerList, Predicate<Worker> predicate) {

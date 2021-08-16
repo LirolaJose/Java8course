@@ -4,6 +4,7 @@ import com.dataart.core.data.Company;
 import com.dataart.core.data.Profession;
 import com.dataart.core.data.Worker;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
@@ -27,15 +28,23 @@ public class AsyncFutureServiceImpl {
     public static CompletableFuture<List<Worker>> handleFutures(CompletableFuture<Company> companyCompletableFuture,
                                                                 CompletableFuture<Profession> professionCompletableFuture) throws ExecutionException, InterruptedException {
 
+//        return CompletableFuture.allOf(professionCompletableFuture, companyCompletableFuture)
+//                .thenApply(v -> companyCompletableFuture.join()
+//                        .getWorkers()
+//                        // TODO: please try to avoid using internal streams inside of map/flatMaps
+//                        .map(workers -> workers.stream()
+//                                .filter(worker -> worker.getProfession().equals(professionCompletableFuture.join()))
+//                                .collect(Collectors.toList()))
+//                        // TODO: it's not a good idea to return NULL as a collection result
+//                        .orElse(null));
+
         return CompletableFuture.allOf(professionCompletableFuture, companyCompletableFuture)
-                .thenApply(v -> companyCompletableFuture.join()
-                        .getWorkers()
-                        // TODO: please try to avoid using internal streams inside of map/flatMaps
-                        .map(workers -> workers.stream()
-                                .filter(worker -> worker.getProfession().equals(professionCompletableFuture.join()))
-                                .collect(Collectors.toList()))
-                        // TODO: it's not a good idea to return NULL as a collection result
-                        .orElse(null));
+                                .thenApply(v -> companyCompletableFuture.join()
+                                                                        .getWorkers()
+                                                                        .orElse(Collections.emptyList())
+                                                                        .stream()
+                                                                        .filter(worker ->  worker.getProfession().equals(professionCompletableFuture.join()))
+                                                                        .collect(Collectors.toList()));
     }
 
 }
